@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    body {
+      font-family: Arial;
+      font-size: 17px;
+      padding: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .row {
+      display: -ms-flexbox;
+      /* IE10 */
+      display: flex;
+      -ms-flex-wrap: wrap;
+      /* IE10 */
+      flex-wrap: wrap;
+      margin: 0 -16px;
+    }
+
+    .col-25 {
+      -ms-flex: 25%;
+      /* IE10 */
+      flex: 25%;
+    }
+
+    .col-50 {
+      -ms-flex: 50%;
+      /* IE10 */
+      flex: 50%;
+      max-height: 600px;
+    }
+
+    .col-60 {
+      -ms-flex: 50%;
+      /* IE10 */
+      flex: 50%;
+      max-height: 300px;
+    }
+
+    .col-75 {
+      -ms-flex: 75%;
+      /* IE10 */
+      flex: 75%;
+    }
+
+    .col-25,
+    .col-50,
+    .col-75 {
+      padding: 0 16px;
+    }
+
+    .container {
+      background-color: #f2f2f2;
+      padding: 5px 20px 15px 20px;
+      border: 1px solid lightgrey;
+      border-radius: 3px;
+    }
+
+    input[type=text] {
+      width: 100%;
+      margin-bottom: 20px;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    label {
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .icon-container {
+      margin-bottom: 20px;
+      padding: 7px 0;
+      font-size: 24px;
+    }
+
+    .btn {
+      background-color: #000000;
+      color: rgb(248, 248, 248);
+      padding: 12px;
+      margin: 10px 0;
+      border: 1;
+      width: 100%;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 17px;
+      border-radius: 20px;
+      visibility: visible;
+    }
+
+    .btn:hover {
+      background-color: #fcfcfc;
+      color: #000000;
+    }
+
+    a {
+      color: #2196F3;
+    }
+
+    hr {
+      border: 1px solid lightgrey;
+    }
+
+    span.price {
+      float: right;
+      color: grey;
+    }
+
+    /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
+    @media (max-width: 800px) {
+      .row {
+        flex-direction: column-reverse;
+      }
+
+      .col-25 {
+        margin-bottom: 20px;
+      }
+    }
+
+    .container2 {
+      margin-top: 5px;
+      max-height: 300px;
+
+    }
+
+    .payment-option {
+      width: 90%;
+      height: 60px;
+      background-color: #EFEFEF;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding-left: 15px;
+      margin: 15px;
+      border-radius: 5px;
+      border: 1px solid rgb(201, 199, 199);
+      cursor: pointer;
+    }
+
+    .payment-option>h3 {
+      margin-right: 20px;
+      cursor: pointer;
+    }
+
+    .payment-option>input {
+      margin-right: 20px;
+      cursor: pointer;
+    }
+
+    .payment-toggle {
+      visibility: hidden;
+    }
+
+    .add-card {
+      margin-left: 15px;
+      margin-top: 20px;
+      visibility: hidden;
+    }
+
+    .radio-btn1 {
+      height: 20px;
+      width: 20px;
+      border-radius: 100px;
+      border: 2px solid grey;
+      background: white;
+      padding: 5px;
+
+    }
+
+    .add-address {
+      visibility: hidden;
+      margin-top: 20px;
+      margin-left: 15px
+    }
+
+    .save-btn {
+      height: 50px;
+      width: 20%;
+      background-color: #2196F3;
+      margin-left: 20px;
+      border: none;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .save-btn>span {
+      color: white;
+      font-weight: bold;
+    }
+
+
+    .single-address {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+
+    }
+
+    .address-info {
+      margin-left: 15px;
+    }
+
+    .address-info>h4 {
+      margin-top: 2px;
+
+    }
+
+    .single-address {
+      width: 100%;
+      height: 200px;
+      max-height: 250px;
+      background-color: #dad8d8;
+      padding: 15px;
+      margin-top: 10px;
+      border-radius: 5px;
+    }
+
+    .deliver-btn {
+      width: 30%;
+      height: 60px;
+      margin-top: 20px;
+      border: none;
+      background-color: orangered;
+      border-radius: 3px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .deliver-btn>span {
+      color: white;
+      font-weight: bold;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    .add-address-btn {
+      height: 70px;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      padding-left: 20px;
+      background-color: #dad8d8;
+      margin-top: 15px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .add-address-btn>h3 {
+      color: blue;
+      font-weight: bold;
+      margin-left: 20px;
+      cursor: pointer;
+    }
+
+    .payment-section {}
+  </style>
+</head>
+
+<body>
+  <div>
+
+    <div class="container">
+      <div class="col-50" id="address-container">
+        <h4>Billing Address</h4>
+        <div class="address-section">
+          <div class="single-address">
+            <input type="radio" name="address">
+            <div class="address-info">
+              <h4>Name</h4>
+              <h5>Street 3192 Redbud Drive
+                City New York
+                State/Province abbr NY
+                State/Province full New York
+                Zip Code/Postal code 10011</h5>
+            </div>
+          </div>
+          <div class="single-address">
+            <input type="radio" name="address">
+            <div class="address-info">
+              <h4>Name</h4>
+              <h5>Street 3192 Redbud Drive
+                City New York
+                State/Province abbr NY
+                State/Province full New York
+                Zip Code/Postal code 10011</h5>
+              <div class="deliver-btn">
+                <span>Deliver Here</span>
+              </div>
+            </div>
+          </div>
+          <div onclick="address_dropdown()" class="add-address-btn">
+            <i onclick="address_dropdown()" class='fas fa-plus' style='font-size:24px; color:rgb(1, 1, 10);'></i>
+            <h3 onclick="address_dropdown()">Add New Address</h3>
+          </div>
+          <div id="add-address" class="add-address">
+            <label for="fname"><i class="fa fa-user"></i> Full Name</label>
+            <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
+            <label for="email"><i class="fa fa-envelope"></i> Email</label>
+            <input type="text" id="email" name="email" placeholder="john@example.com">
+            <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
+            <input type="text" id="adr" name="address" placeholder="542 W. 15th Street">
+            <label for="city"><i class="fa fa-institution"></i> City</label>
+            <input type="text" id="city" name="city" placeholder="New York">
+
+            <div class="row">
+              <div class="col-50">
+                <label for="state">State</label>
+                <input type="text" id="state" name="state" placeholder="NY">
+              </div>
+              <div class="col-50">
+                <label for="zip">Zip</label>
+                <input type="text" id="zip" name="zip" placeholder="10001">
+              </div>
+              <div class="save-btn"><span>Save</span></div>
+
+            </div>
+            <label style="margin-top:15px">
+              <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
+            </label>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container2" id="card-container">
+      <div class="col-60" id="card-container">
+        <h3>Payment</h3>
+        <label for="fname">Accepted Cards</label>
+        <div class="icon-container">
+          <i class="fa fa-cc-visa" style="color:navy;"></i>
+          <i class="fa fa-cc-amex" style="color:blue;"></i>
+          <i class="fa fa-cc-mastercard" style="color:red;"></i>
+          <i class="fa fa-cc-discover" style="color:orange;"></i>
+        </div>
+        <div class="payment-section" id="card-container">
+          <div class="payment-option">
+            <h3>PAY ON DELIVERY</h3>
+            <input type="radio" name="radio">
+          </div>
+          <div onclick="payment_dropdown()" class="payment-option">
+            <h3 onclick="payment_dropdown()">DEBIT CARD</h3>
+            <input type="radio" name="radio">
+          </div>
+          <div id="payment-option" class="payment-toggle">
+            <div class="payment-option">
+              <h3>FEDERAL BANK - 0686</h3>
+              <input type="radio" name="radio">
+            </div>
+            <div onclick="card_dropdown()" class="payment-option">
+              <h3 onclick="card_dropdown()">ADD CARD</h3>
+              <input type="radio" name="radio">
+            </div>
+            <div id="add-card" class="add-card">
+              <label for="cname">Name on Card</label>
+              <input type="text" id="cname" name="cardname" placeholder="John More Doe">
+              <label for="ccnum">Debit card number</label>
+              <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
+              <label for="expmonth">Exp Month</label>
+              <input type="text" id="expmonth" name="expmonth" placeholder="September">
+              <div class="row">
+                <div class="col-50">
+                  <label for="expyear">Exp Year</label>
+                  <input type="text" id="expyear" name="expyear" placeholder="2018">
+                </div>
+                <div class="col-50">
+                  <label for="cvv">CVV</label>
+                  <input type="text" id="cvv" name="cvv" placeholder="352">
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+          <input id="btn" type="submit" value="Continue to checkout" class="btn">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  var payment = document.getElementById("payment-option");
+  var add_card = document.getElementById("add-card");
+  var rad1 = document.getElementById("rad1");
+  var rad2 = document.getElementById("rad2");
+  var rad3 = document.getElementById("rad3");
+  var add_address = document.getElementById("add-address");
+  var container = document.getElementById("address-container");
+  var container1 = document.getElementById("card-container");
+  var btn = document.getElementById("btn");
+
+
+  function payment_dropdown() {
+    if (payment.style.visibility == "visible") {
+      payment.style.visibility = "hidden";
+      add_card.style.visibility = "hidden";
+      container.style.maxHeight = "500px";
+    }
+    else {
+      payment.style.visibility = "visible";
+      add_card.style.visibility = "hidden";
+    }
+  }
+
+  function card_dropdown() {
+    if (add_card.style.visibility == "visible") {
+      add_card.style.visibility = "hidden";
+    }
+    else {
+      add_card.style.visibility = "visible";
+      container.style.maxHeight = "800px";
+    }
+  }
+
+  function address_dropdown() {
+    if (add_address.style.visibility == "visible") {
+      add_address.style.visibility = "hidden";
+      container.style.maxHeight = "600px";
+    }
+    else {
+      add_address.style.visibility = "visible";
+      container.style.maxHeight = "1200px";
+    }
+  }
+
+</script>
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+</html>
